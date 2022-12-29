@@ -12,3 +12,4 @@ https://plotly.com/python/pie-charts/#pie-chart-with-plotly-express
 categories: https://finmasters.com/budget-categories/#gref
 datetimeinfos:https://discuss.streamlit.io/t/using-st-date-input-to-get-multiple-dates-input-with-one-st-date-input-call/25858
 
+deploy: https://discuss.streamlit.io/t/streamlit-deployment-as-an-executable-file-exe-for-windows-macos-and-android/6812
