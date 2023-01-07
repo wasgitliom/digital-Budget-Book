@@ -13,3 +13,5 @@ categories: https://finmasters.com/budget-categories/#gref
 datetimeinfos:https://discuss.streamlit.io/t/using-st-date-input-to-get-multiple-dates-input-with-one-st-date-input-call/25858
 
 deploy: https://discuss.streamlit.io/t/streamlit-deployment-as-an-executable-file-exe-for-windows-macos-and-android/6812
+
+create an android app from scratch: https://www.youtube.com/watch?v=EOfCEhWq8sg, https://developer.android.com/studio/install
