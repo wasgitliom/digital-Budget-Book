@@ -16,15 +16,42 @@ st.set_page_config(
         page_title='Charts',
         page_icon=":tada:",
         layout="centered")
-st.header('Incomes and Expenses')
 currency = "€"  
-
+col1, col2 = st.columns(2)
+with col2: st.header('Incomes and Expenses')
 # -------------- LOAD DATA --------------
 excel_file2 = 'DATA.xlsx'
 sheet_trans = 'TRANS'
 df_trans = pd.read_excel(excel_file2, sheet_name=sheet_trans, usecols='B:Z')
+df_metric = df_trans
+
+# -------------- METRIC VARIABLES --------------
+# init money, before the trans in excel sheet begun
+bank = 5672
+pocket = 322
+
+
+delta = df_metric[['type', 'amount']].tail(1)
+if delta['type'].iloc[0] == "expenses📉":
+        delta = str(-delta['amount'].iloc[0])
+else:  
+        delta = str(delta['amount'].iloc[0])
+
+df_metric = df_metric[['type', 'amount']].groupby(by="type").sum()
+df_metric = df_metric.transpose()
+
+
+expenses = df_metric["expenses📉"].iloc[0]
+incomes = df_metric["incomes📈"].iloc[0]
+
+# -------------- METRIC VIEW -------------- 
+totalbudget =  bank + pocket + incomes - expenses
+
+with col1: st.metric(label="Total Budget", value=totalbudget, delta=delta)
+
 
 # -------------- DATE INPUT --------------
+"---"
 current_year = date.today().year
 current_month = date.today().month
 lastday_month = monthrange(current_year, current_month)[1]
@@ -60,6 +87,7 @@ fig.update_traces(
 st.plotly_chart(fig)
 
 # -------------- SUNBURST CHART --------------
+"---"
 st.header('sunburst chart with categories')
 fig = px.sunburst(
         data_frame = df_sunburst,
@@ -69,11 +97,11 @@ st.plotly_chart(fig)
 
 
 # -------------- HIDE STREAMLIT --------------
-hide_st_style = """
-        <style>
-        #MainMenu {visibility: hidden;}
-        footer {visibility: hidden;}
-        header {visibility: hidden;}
-        </style>
-        """
-st.markdown(hide_st_style, unsafe_allow_html=True)
+# hide_st_style = """
+#         <style>
+#         #MainMenu {visibility: hidden;}
+#         footer {visibility: hidden;}
+#         header {visibility: hidden;}
+#         </style>
+#         """
+# st.markdown(hide_st_style, unsafe_allow_html=True)
